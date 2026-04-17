@@ -1,10 +1,13 @@
+# from dotenv import load_dotenv
 from openai import OpenAI
 from src.tools.registry import tools, TOOL_MAP
 from src.utils.constants import OPENAI_MODEL_NAME
 import os
 
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+# load_dotenv()
+# client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def generate_answer_with_memory(query, contexts, history):
     combined_context = "\n\n".join(contexts)
