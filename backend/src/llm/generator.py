@@ -3,7 +3,7 @@ from backend.src.utils.constants import OPENAI_MODEL_NAME
 import os
 
 
-client = OpenAI(api_key=os.environ.get("OPENAI_APIK_KEY"))
+client = OpenAI(api_key=os.getenv("OPENAI_APIK_KEY"))
 
 def generate_completion(messages, tools=None, tools_choice="auto", temperature=0):
     kwargs = {

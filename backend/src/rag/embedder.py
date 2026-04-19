@@ -4,7 +4,7 @@ import os
 import numpy as np
 
 
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def embed_text(text: str):
     response = client.embeddings.create(

@@ -1,0 +1,27 @@
+services:
+  # 1. Backend Service
+  - type: web
+    name: llm-rag-agent-backend
+    runtime: docker
+    dockerContext: ./backend
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: PORT
+        value: 8000 # Tells Render to listen on 8000 for the backend
+      - key: OPENAI_API_KEY
+        sync: false
+
+  # 2. Streamlit UI Service
+  - type: web
+    name: llm-rag-agent-ui
+    runtime: docker
+    dockerContext: ./ui
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: PORT
+        value: 8501 # Tells Render to listen on 8501 for Streamlit
+      - key: BACKEND_URL
+        fromService:
+          name: llm-rag-agent-backend
+          type: web
+          property: host
