@@ -1,4 +1,7 @@
-from evaluation.evaluator import (
+from dotenv import load_dotenv
+load_dotenv()
+
+from backend.evaluation.evaluator import (
     exact_match,
     keyword_coverage,
     retrieval_hit_at_k,
@@ -8,7 +11,7 @@ from backend.src.agent.agent import run_agent_with_debug
 
 
 def main():
-    dataset = load_dataset("evaluation/dataset.json")
+    dataset = load_dataset("backend/evaluation/dataset.json")
     total = len(dataset)
     retrieval_hit_score = 0
     exact_match_score = 0

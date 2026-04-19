@@ -176,6 +176,6 @@ def run_agent_with_debug(query: str, session_id: str = "default"):
     answer, metadata = llm_agent(query, session_id, 5)
     return {
         "answer": answer,
-        "retrieved_chunks": contexts,
+        "retrieved_chunks": metadata["retrieved_chunks"],
         "metadata": metadata
     }
