@@ -1,14 +1,21 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from backend.src.agent.agent import rule_based_agent, llm_agent
 from backend.src.utils.helper import logger
 from backend.src.observability.metrics import get_metrics as fetch_metrics
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
 import time
 
 
+limiter = Limiter(key_func=get_remote_address)
 app = FastAPI()
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 @app.get("/")
 def get_welcome_page():
@@ -23,7 +30,8 @@ def get_metrics():
     return fetch_metrics()
 
 @app.get("/ask_rule_based_agent")
-def ask_rule_based_agent(query: str, session_id: str = "default"):
+@limiter.limit("10/minute")
+def ask_rule_based_agent(request: Request, query: str, session_id: str = "default"):
     start_time = time.time()
     try:
         logger.info(f"Incoming query | session_id={session_id} | query={query}")
@@ -54,7 +62,8 @@ def ask_rule_based_agent(query: str, session_id: str = "default"):
         }
 
 @app.get("/ask_llm_agent")
-def ask_llm_agent(query: str, session_id: str = "default"):
+@limiter.limit("10/minute")
+def ask_llm_agent(request: Request, query: str, session_id: str = "default"):
     start_time = time.time()
     try:
         logger.info(f"Incoming query | session_id={session_id} | query={query}")
