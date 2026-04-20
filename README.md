@@ -96,30 +96,47 @@ The service includes:
 ## Project Structure
 
 ```text
-src/
-├── main.py
-├── agent/
-│   └── agent.py
-├── rag/
-│   ├── retriever.py
-│   ├── retriever_store.py
-│   ├── chunker.py
-│   └── loader.py
-├── tools/
-│   ├── tools.py
-│   └── registry.py
-├── memory/
-│   └── memory_store.py
-├── observability/
-│   ├── logger.py
-│   └── metrics.py
-
-evaluation/
-├── dataset.json
-└── evaluator.py
-
-scripts/
-└── run_eval.py
+llm-rag-agent/
+├── backend/
+│   ├── data/
+│   ├── evaluation/
+│   │   ├── dataset.json
+│   │   └── evaluator.py
+│   ├── scripts/
+│   │   └── run_eval.py
+│   ├── src/
+│   │   ├── agent/
+│   │   │   └── agent.py
+│   │   ├── llm/
+│   │   │   └── generator.py
+│   │   ├── memory/
+│   │   │   └── memory_store.py
+│   │   ├── observability/
+│   │   │   ├── logger.py
+│   │   │   ├── metrics_db.py
+│   │   │   └── metrics_service.py
+│   │   ├── rag/
+│   │   │   ├── chunker.py
+│   │   │   ├── embedder.py
+│   │   │   ├── loader.py
+│   │   │   ├── retriever.py
+│   │   │   └── retriever_store.py
+│   │   ├── tools/
+│   │   │   ├── registry.py
+│   │   │   └── tools.py
+│   │   ├── utils/
+│   │   │   ├── constants.py
+│   │   │   └── helper.py
+│   │   └── main.py
+│   ├── Dockerfile
+│   └── requirements.txt
+├── ui/
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── streamlit_app.py
+├── docker-compose.yaml
+├── README.md
+└── render.yaml
 ```
 
 ---

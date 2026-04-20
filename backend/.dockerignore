@@ -11,3 +11,4 @@ tests
 cache
 README.md
 .DS_Store
+*.db

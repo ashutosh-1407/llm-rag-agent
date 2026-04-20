@@ -16,3 +16,4 @@ data
 evaluation
 scripts
 src
+*.db
